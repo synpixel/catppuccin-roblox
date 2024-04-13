@@ -1,6 +1,6 @@
 [package]
 name = "synpixel/catppuccin"
-description = "Catppuccin but for Roblox and Luau"
+description = "Catppuccin for Roblox and Luau"
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"

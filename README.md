@@ -1,2 +1,3 @@
-# rbx-catppuccin
-catppuccin for roblox
+# Catppuccin
+
+the roblo

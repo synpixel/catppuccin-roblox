@@ -1,0 +1,6 @@
+{
+  "name": "catppuccin",
+  "tree": {
+    "$path": "palette.luau"
+  }
+}

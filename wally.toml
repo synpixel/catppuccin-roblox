@@ -1,0 +1,11 @@
+[package]
+name = "synpixel/catppuccin"
+description = "Catppuccin but for Roblox and Luau"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+exclude = ["**"]
+include = ["palette.luau", "default.project.json", "wally.lock", "wally.toml"]
+
+[dependencies]

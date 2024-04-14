@@ -32,10 +32,10 @@ local function generateOutput()
 			file ..= `{color} = Color3.fromHex("{hex}"),`
 		end
 
-		file ..= "},"
+		file ..= "},\n"
 	end
 
-	file ..= "\n}"
+	file ..= "}"
 	return file
 end
 

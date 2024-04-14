@@ -25,17 +25,17 @@ local function generateOutput()
 
 	for name, theme in palette do
 		file ..= "\n    "
-		file ..= `{name} = \{`
+		file ..= `{name} = \{\n`
 
 		for color, hex in theme do
-			file ..= "\n        "
-			file ..= `{color} = Color3.fromHex("{hex}"),`
+			file ..= "        "
+			file ..= `{color} = Color3.fromHex("{hex}"),\n`
 		end
 
-		file ..= "},\n"
+		file ..= "	},"
 	end
 
-	file ..= "}"
+	file ..= "\n}"
 	return file
 end
 

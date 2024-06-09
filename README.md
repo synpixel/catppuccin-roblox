@@ -5,7 +5,7 @@
 	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
 </h3>
 
-Catppuccin but for Roblox (automatically generated for the funnies)
+Catppuccin but for Roblox (and automatically generated for the funnies)
 
 - 🌻 Latte
 - 🪴 Frappé

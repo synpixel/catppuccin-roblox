@@ -21,7 +21,7 @@ type PaletteSchema = {
 local palette = {}
 
 local function generateOutput()
-	local file = ""
+	local file = "--!strict\n\n"
 
 	file ..= "export type Palette = {"
 

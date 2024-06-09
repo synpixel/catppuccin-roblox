@@ -21,7 +21,31 @@ type PaletteSchema = {
 local palette = {}
 
 local function generateOutput()
-	local file = "return {"
+	local file = ""
+
+	file ..= "export type Palette = {"
+
+	for name, theme in palette do
+		file ..= "\n	"
+		file ..= `{name}: PaletteColor,`
+	end
+
+	file ..= "\n}\n\n"
+
+	file ..= "export type PaletteColor = {"
+
+	for _, theme in palette do
+		for color, _ in theme do
+			file ..= "\n	"
+			file ..= `{color}: Color3,`
+		end
+
+		break
+	end
+
+	file ..= "\n}\n\n"
+
+	file ..= "local palette: Palette = {"
 
 	for name, theme in palette do
 		file ..= "\n    "
@@ -35,7 +59,8 @@ local function generateOutput()
 		file ..= "	},"
 	end
 
-	file ..= "\n}"
+	file ..= "\n}\n\n"
+	file ..= "return palette\n"
 	return file
 end
 

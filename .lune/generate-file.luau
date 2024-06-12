@@ -109,6 +109,7 @@ local function generateLuauFile(palette: CatppuccinPalette)
 end
 
 local palette = fetchCatppuccinPalette()
+local file = generateLuauFile(palette)
 
-fs.writeFile(FILE_PATH, generateLuauFile(palette))
-process.spawn("stylua", { "--indent-type Tabs", "--indent-width 1", FILE_PATH }, { shell = true })
+local formatResult = process.spawn("stylua -", {}, { stdin = file, shell = true })
+fs.writeFile(FILE_PATH, formatResult.stdout)

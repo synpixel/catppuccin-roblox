@@ -111,4 +111,4 @@ end
 local palette = fetchCatppuccinPalette()
 
 fs.writeFile(FILE_PATH, generateLuauFile(palette))
-process.spawn("stylua", { FILE_PATH }, { shell = true })
+process.spawn("stylua", { "--indent-type Tabs", "--indent-width 2", FILE_PATH }, { shell = true })

@@ -36,18 +36,26 @@ local function definePaletteFlavorType(palette: CatppuccinPalette)
 end
 
 local function definePaletteColorType(palette: CatppuccinPalette)
-	local colorNames: { string } = nil
+	local definition = "export type PaletteColor = "
 
 	for _, flavor in palette do
-		colorNames = collectKeys(flavor.colors)
+		local colorNames = collectKeys(flavor.colors)
+
+		for index, colorName in colorNames do
+			definition ..= "\n"
+			definition ..= "    "
+
+			if index > 1 then
+				definition ..= "| "
+			end
+
+			definition ..= `"{colorName}"`
+		end
+
 		break
 	end
 
-	for index, colorName in colorNames do
-		colorNames[index] = `"{colorName}"`
-	end
-
-	return `export type PaletteColor = {table.concat(colorNames, " | ")}`
+	return definition
 end
 
 local function definePaletteColorsType(palette: CatppuccinPalette)

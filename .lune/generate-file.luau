@@ -1,5 +1,8 @@
 local fs = require("@lune/fs")
+local process = require("@lune/process")
 local net = require("@lune/net")
+
+local FILE_PATH = "palette.luau"
 
 type CatppuccinPalette = {
 	[string]: {
@@ -36,26 +39,18 @@ local function definePaletteFlavorType(palette: CatppuccinPalette)
 end
 
 local function definePaletteColorType(palette: CatppuccinPalette)
-	local definition = "export type PaletteColor = "
+	local colorNames: { string } = nil
 
 	for _, flavor in palette do
-		local colorNames = collectKeys(flavor.colors)
-
-		for index, colorName in colorNames do
-			definition ..= "\n"
-			definition ..= "    "
-
-			if index > 1 then
-				definition ..= "| "
-			end
-
-			definition ..= `"{colorName}"`
-		end
-
+		colorNames = collectKeys(flavor.colors)
 		break
 	end
 
-	return definition
+	for index, colorName in colorNames do
+		colorNames[index] = `"{colorName}"`
+	end
+
+	return `export type PaletteColor = {table.concat(colorNames, " | ")}`
 end
 
 local function definePaletteColorsType(palette: CatppuccinPalette)
@@ -63,15 +58,12 @@ local function definePaletteColorsType(palette: CatppuccinPalette)
 
 	for _, flavor in palette do
 		for colorName in flavor.colors do
-			definition ..= "\n"
-			definition ..= "    "
 			definition ..= `{colorName}: Color3,`
 		end
 
 		break
 	end
 
-	definition ..= "\n"
 	definition ..= "}"
 	return definition
 end
@@ -80,12 +72,9 @@ local function definePaletteType(palette: CatppuccinPalette)
 	local definition = "export type Palette = {"
 
 	for flavorName in palette do
-		definition ..= "\n"
-		definition ..= "    "
 		definition ..= `{flavorName}: PaletteTheme,`
 	end
 
-	definition ..= "\n"
 	definition ..= "}"
 	return definition
 end
@@ -94,23 +83,15 @@ local function definePalette(palette: CatppuccinPalette)
 	local definition = "local palette: Palette = {"
 
 	for flavorName, flavor in palette do
-		definition ..= "\n"
-		definition ..= "    "
 		definition ..= `{flavorName} = \{`
 
 		for colorName, color in flavor.colors do
-			definition ..= "\n"
-			definition ..= "    "
-			definition ..= "    "
 			definition ..= `{colorName} = Color3.fromHex("{color.hex}"),`
 		end
 
-		definition ..= "\n"
-		definition ..= "    "
 		definition ..= "},"
 	end
 
-	definition ..= "\n"
 	definition ..= "}"
 	return definition
 end
@@ -123,9 +104,11 @@ local function generateLuauFile(palette: CatppuccinPalette)
 		definePaletteColorsType(palette),
 		definePaletteType(palette),
 		definePalette(palette),
-		"return palette\n",
+		"return palette",
 	}, "\n\n")
 end
 
 local palette = fetchCatppuccinPalette()
-fs.writeFile("palette.luau", generateLuauFile(palette))
+
+fs.writeFile(FILE_PATH, generateLuauFile(palette))
+process.spawn("stylua", { FILE_PATH }, { shell = true })
